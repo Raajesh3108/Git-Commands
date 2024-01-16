@@ -269,3 +269,7 @@ This is useful when you want to include another repository's content into your o
 ```sh
 git subtree add --prefix=subdir-name remote-repo.git branch-name
 ```
+
+# Summary
+
+![Summary](./assets/summary.webp)
