@@ -22,251 +22,195 @@
 
 - [Summary](#summary)
 
-# Git Repository
+## Git Repository
 
-Git initialization:
+### Git Initialization:
 
-```sh
+```bash
 git init
 ```
 
-Delet the Initialized git repository: (This will remove the version control system)
+### Delet the Initialized git repository:
 
-```sh
+This will remove the version control system
+
+```bash
 rm -rf .git
 ```
 
-Display the status of git repository:
+### Display the status of git repository:
 
-```sh
+```bash
 git status
 ```
 
-Display commits history:
+### Display commits history:
 
-```sh
+```bash
 git log
 ```
 
-# Basics
+## Basics
 
-Add all files to staging area:
+### Add all files to staging area:
 
-```sh
+```bash
 git add .
 ```
 
-Remove all files from staging area:
+### Remove all files from staging area:
 
-```sh
+```bash
 git rm --cached -r .
 ```
 
-Commiting the staging area files:
+### Commiting the staging area files:
 
-```sh
+```bash
 git commit -m "Intial Commit"
 ```
 
-# Remote Repository
+## Remote Repository
 
-Pushing the local git repository to remote git repository:
+### Pushing Local Repository to Remote:
 
-```sh
+```bash
 git push origin master
 ```
 
-Pull from remote to local repository:
+### Pull from Remote to Local:
 
-```sh
+```bash
 git pull
 ```
 
-Cloning a Remote Repository:
+### Cloning a Remote Repository:
 
-```sh
+```bash
 git clone <url>
 ```
 
-Merging a Remote Repository:
+### Merging a Remote Branch with Local:
 
-```sh
+```bash
 git pull origin <branch_name>
-
 ```
 
-- This **Merges** the remote repository with local repository.
+This command merges the remote branch with the local repository.
 
-# Branches
+## Branches
 
-Creating a branch:
+### Creating a branch:
 
-```sh
+```bash
 git branch <branch-name>
 ```
 
-Displaying all the branches:
+### Displaying all the branches:
 
-```sh
+```bash
 git branch
 ```
 
-Merging the branch with main branch:
+### Merging a Branch with the Main Branch:
 
-```sh
+```bash
 git merge <branch-name>
 ```
 
-# Git Checkout
+## Git Checkout
 
-Switching Branches
+### Switching Branches:
 
-```sh
+```bash
 git checkout <branch-name>
 ```
 
-Create a new branch and switch to it:
+### Create a new branch and switch to it:
 
-```sh
+```bash
 git checkout -b feature/new-feature
-
 ```
 
-Go to the specific commit of the file:
+### Check out a specific commit:
 
-```sh
+```bash
 git checkout <commit-hash>
 ```
 
 Go to the latest commit of the working branch:
 
-```sh
+```bash
 git checkout <branch-name>
 ```
 
-This command will update your working directory to the latest commit on the specified branch.
+This updates your working directory to the latest commit on the specified branch.
 
-# Reversing Changes
+## Reversing Changes
 
-```sh
+### Reset to a specific commit:
+
+```bash
 git reset [options] <commit-hash>
 ```
 
-This command in Git is a versatile command that allows you to reset the state of your repository to a specific commit.
+This resets the state of your repository to the specified commit.
 
----
+### Reset Soft (keep changes in staging):
 
-```sh
+```bash
 git reset --soft <commit-hash>
 ```
 
-The --soft option
+This undoes the last commit but keeps the changes from that commit in the working directory and staging area.
 
-- This command will undo the last commit, but keep the changes from that commit in your working directory and staging area.
-  - This means that your changes are not lost and are ready to be committed again.
+## Reset Hard (Discard Changes):
 
-You can then manually unstage or delete the files you want to remove.
-
-```sh
-A -- B -- C -- D (HEAD)
-```
-
-If you run `git reset --soft B`, you'll get:
-
-```sh
-A -- B (HEAD) -- C -- D
-```
-
-The commits C and D are effectively "uncommitted," and their changes are in the staging area, ready for a new commit.
-
----
-
-```sh
+```bash
 git reset --hard <commit-hash>
-
 ```
 
-The --hard option
+This permanently moves the branch pointer to the specified commit, resets the staging area, and discards all changes in your working directory.
 
-- moves the branch pointer to the specified commit
-- resets the staging area (index) to that commit
-- discards all changes in your working directory
+>Note: After resetting, you may want to update the remote repository:
 
-Use this option with caution, as it permanently deletes your uncommitted changes.
-
-```sh
-A -- B -- C -- D (HEAD)
+```bash
+git push --force origin <branch-name>
 ```
-
-If you run `git reset --hard B`, you'll get:
-
-```sh
-A -- B (HEAD)
-```
-
-Commits C and D are effectively "discarded," and their changes are lost.
-
-> Note : We might want to update the remote repository with the changes we made in the local repository.
->
-> To do so we can use the following command:
-> `git push --force origin <branch-name>`
-
----
 
 ## Git Clean
 
-If you have new files in your working directory that you want to remove in addition to resetting your branch to the latest commit, you can use the git clean command.
+### Check for Untracked Files:
 
-The git clean command is used to remove untracked files and directories from your working directory. Here's how you can do it:
-
-Check for Untracked Files:
-
-```sh
+```bash
 git clean -n
-
 ```
 
-Remove Untracked Files:
+### Remove Untracked Files:
 
-```sh
+```bash
 git clean -f
-
 ```
 
-Be very cautious when using git clean -f because it permanently deletes untracked files and directories, and there's no way to recover them.
+>Use this with caution, as it permanently deletes untracked files.
 
 ## Git Revert
 
-```sh
+### Revert a Specific Commit:
+
+```bash
 git revert <commit-hash>
 ```
 
-This command is used to create a new commit that undoes the changes made by a previous commit.
+This creates a new commit that undoes the changes made by a previous commit.
 
-```sh
-A -- B -- C -- D (HEAD)
-```
+## Git Subtree
 
-You want to undo the changes introduced by commit C. You can use git revert as follows:
+Git subtree allows you to embed one Git repository within another as a subdirectory.
 
-```sh
-git revert C
+### Add a Subtree:
 
-```
-
-After running this command, Git will create a new commit (let's call it E) that undoes the changes from commit C. The commit history will look like this:
-
-```sh
-A -- B -- C -- D -- E (HEAD)
-```
-
-# Git Subtree
-
-Git subtree is a feature in Git that allows you to embed one Git repository within another as a subdirectory.
-
-This is useful when you want to include another repository's content into your own project, while still keeping them separate, and track changes to the embedded repository as part of your project's history.
-
-```sh
+```bash
 git subtree add --prefix=subdir-name remote-repo.git branch-name
 ```
 
